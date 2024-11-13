@@ -1,4 +1,4 @@
-import {ThemeProvider} from 'styled-components'
+import {ThemeProvider} from 'styled-components/native'
 import theme from './src/styles/theme'
 
 import {queryClient} from './src/libs/react-query'

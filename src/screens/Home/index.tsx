@@ -1,18 +1,7 @@
 import {useQuery} from '@tanstack/react-query'
-import {
-  Card,
-  Container,
-  List,
-  Title,
-  CardTitle,
-  CardContent,
-  Label,
-  Content,
-} from './styles'
-import {Text} from 'react-native'
+import {Container, List, Title} from './styles'
 import {getChecklist} from '../../api/get-check'
-import {format} from 'date-fns'
-import {ptBR} from 'date-fns/locale/pt-BR'
+import {Card} from './Card'
 
 export function Home() {
   const {data: checklist} = useQuery({
@@ -27,29 +16,12 @@ export function Home() {
         data={checklist}
         keyExtractor={(item) => String(item._id)}
         renderItem={({item}) => (
-          <Card>
-            <CardTitle>{item.from.name}</CardTitle>
-            <CardContent>
-              <Content>
-                <Label>Fazenda:</Label>
-                <Text>{item.farmer.name}</Text>
-              </Content>
-
-              <Content>
-                <Label>Cidade:</Label>
-                <Text>{item.farmer.city}</Text>
-              </Content>
-
-              <Content>
-                <Label>Data:</Label>
-                <Text>
-                  {format(new Date(item.created_at), 'dd/MM/yyyy', {
-                    locale: ptBR,
-                  })}
-                </Text>
-              </Content>
-            </CardContent>
-          </Card>
+          <Card
+            testID={String(item._id)}
+            farmer={item.farmer}
+            from={item.from}
+            created_at={item.created_at}
+          />
         )}
       />
     </Container>

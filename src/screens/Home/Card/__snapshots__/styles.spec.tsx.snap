@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card.styles CardTitle DEVE ser igual ao snapshot 1`] = `
+<Text
+  style={
+    {
+      "color": "#47474D",
+      "fontSize": 16,
+      "fontWeight": "bold",
+      "marginBottom": 5,
+    }
+  }
+/>
+`;
+
+exports[`Card.styles Container DEVE ser igual ao snapshot 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "backgroundColor": "#F4F5F6",
+      "borderBottomLeftRadius": 5,
+      "borderBottomRightRadius": 5,
+      "borderTopLeftRadius": 5,
+      "borderTopRightRadius": 5,
+      "marginBottom": 10,
+      "opacity": 1,
+      "paddingBottom": 10,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "paddingTop": 10,
+    }
+  }
+/>
+`;
+
+exports[`Card.styles Content DEVE ser igual ao snapshot 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+    }
+  }
+/>
+`;
+
+exports[`Card.styles Label DEVE ser igual ao snapshot 1`] = `
+<Text
+  style={
+    {
+      "color": "#7A7A80",
+      "fontSize": 14,
+      "fontWeight": "bold",
+    }
+  }
+/>
+`;
+
+exports[`Card.styles Text DEVE ser igual ao snapshot 1`] = `
+<Text
+  style={
+    {
+      "color": "#AEAEB3",
+      "fontSize": 14,
+      "fontWeight": "bold",
+    }
+  }
+/>
+`;
