@@ -1,3 +1,4 @@
+import {useQuery} from '@tanstack/react-query'
 import {
   Card,
   Container,
@@ -9,102 +10,43 @@ import {
   Content,
 } from './styles'
 import {Text} from 'react-native'
+import {getChecklist} from '../../api/get-check'
+import {format} from 'date-fns'
+import {ptBR} from 'date-fns/locale/pt-BR'
 
 export function Home() {
+  const {data: checklist} = useQuery({
+    queryKey: ['checklist'],
+    queryFn: getChecklist,
+  })
+
   return (
     <Container>
       <Title>Checklist</Title>
       <List
-        data={[
-          {
-            name: 'Fernando Siqueira Assis',
-            id: 1,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 2,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 3,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 4,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 5,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 6,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 7,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 8,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 9,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-          {
-            name: 'Fazendeiro',
-            id: 10,
-            city: 'Belo Horizonte',
-            farm: 'Fazenda A',
-            date: '2023-06-01',
-          },
-        ]}
-        keyExtractor={(item) => String(item.id)}
+        data={checklist}
+        keyExtractor={(item) => String(item._id)}
         renderItem={({item}) => (
           <Card>
-            <CardTitle>{item.name}</CardTitle>
+            <CardTitle>{item.from.name}</CardTitle>
             <CardContent>
               <Content>
-                <Label>Fazenda</Label>
-                <Text>{item.farm}</Text>
+                <Label>Fazenda:</Label>
+                <Text>{item.farmer.name}</Text>
               </Content>
 
               <Content>
                 <Label>Cidade:</Label>
-                <Text>{item.city}</Text>
+                <Text>{item.farmer.city}</Text>
               </Content>
 
               <Content>
                 <Label>Data:</Label>
-                <Text>{item.date}</Text>
+                <Text>
+                  {format(new Date(item.created_at), 'dd/MM/yyyy', {
+                    locale: ptBR,
+                  })}
+                </Text>
               </Content>
             </CardContent>
           </Card>
