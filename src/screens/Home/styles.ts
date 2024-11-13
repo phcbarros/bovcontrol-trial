@@ -48,7 +48,7 @@ export const List = styled(FlatList<ChecklistProps>).attrs({
   padding: 0 20px;
 `
 
-export const Card = styled.View`
+export const Card = styled.TouchableOpacity`
   background-color: ${({theme}) => theme.colors.backgroundPrimary};
   padding: 10px;
   border-radius: 5px;
