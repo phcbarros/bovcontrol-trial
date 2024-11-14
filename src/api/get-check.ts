@@ -15,7 +15,7 @@ export interface GetChecklistQuery {
     name: string
   }
   number_of_cows_head: string
-  had_supervision: true
+  had_supervision: boolean
   location: {
     latitude: string
     longitude: string

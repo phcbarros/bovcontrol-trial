@@ -14,9 +14,9 @@ type Props = TouchableOpacityProps & {
   created_at: string
 }
 
-export function Card({from, farmer, created_at}: Props) {
+export function Card({from, farmer, created_at, ...rest}: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <CardTitle>{from.name}</CardTitle>
       <CardContent>
         <Content>
