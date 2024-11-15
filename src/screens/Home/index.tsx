@@ -3,6 +3,7 @@ import {Container, List, Title} from './styles'
 import {getChecklist, GetChecklistQuery} from '../../api/get-check'
 import {Card} from './Card'
 import {useNavigation} from '@react-navigation/native'
+import {Button} from '../../components/Button'
 
 export function Home() {
   const {data: checklist} = useQuery({
@@ -13,10 +14,13 @@ export function Home() {
   const {navigate} = useNavigation()
 
   function handleOnPress(item: GetChecklistQuery) {
-    console.log('handleOnPress')
     navigate('detail', {
       item,
     })
+  }
+
+  function handlerAddNewChecklist() {
+    navigate('checkListFormStepOne')
   }
 
   return (
@@ -35,6 +39,7 @@ export function Home() {
           />
         )}
       />
+      <Button title="Novo Checklist" onPress={handlerAddNewChecklist} />
     </Container>
   )
 }

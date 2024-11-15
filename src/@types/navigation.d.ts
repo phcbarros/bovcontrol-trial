@@ -5,6 +5,8 @@ export declare global {
       detail: {
         item: GetChecklistQuery
       }
+      checkListFormStepOne: undefined
+      checkListFormStepTwo: undefined
     }
   }
 }

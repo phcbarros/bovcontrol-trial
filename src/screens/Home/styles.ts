@@ -27,10 +27,12 @@ type ChecklistProps = {
 
 export const Container = styled.View`
   flex: 1;
+  width: 100%;
   background-color: ${({theme}) => theme.colors.backgroundSecondary};
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
+  padding: 20px;
 `
 
 export const Title = styled.Text`
@@ -42,8 +44,7 @@ export const Title = styled.Text`
 
 export const List = styled(FlatList<ChecklistProps>).attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: {paddingBottom: 74},
 })`
   width: 100%;
-  padding: 0 20px;
+  margin-bottom: 20px;
 `
