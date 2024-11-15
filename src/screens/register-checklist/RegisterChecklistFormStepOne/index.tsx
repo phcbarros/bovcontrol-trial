@@ -1,23 +1,30 @@
-import {Button, TextInput} from 'react-native'
-import {Input} from '../../components/Input'
+import {TextInput} from 'react-native'
+import {Input} from '../../../components/Input'
 import {Container, Title} from './styles'
 import {useFormContext} from 'react-hook-form'
 import {useRef} from 'react'
 import {useNavigation} from '@react-navigation/native'
+import {RegisterChecklistFormData} from '../../../@types/checklist'
+import {Button} from '../../../components/Button'
 
 export function ChecklistFormStepOne() {
   const {
     control,
     handleSubmit,
-    formState: {errors},
-  } = useFormContext()
+    formState: {errors, isValid},
+  } = useFormContext<RegisterChecklistFormData>()
+
   const farmRef = useRef<TextInput>(null)
   const cityRef = useRef<TextInput>(null)
+  const latitudeRef = useRef<TextInput>(null)
+  const longitudeRef = useRef<TextInput>(null)
+
+  console.log('s', isValid)
 
   const {navigate} = useNavigation()
 
-  function handleNextStep(data: any) {
-    navigate('checkListFormStepTwo')
+  function handleNextStep() {
+    navigate('registerChecklistFormStepTwo')
   }
 
   return (
@@ -71,12 +78,50 @@ export function ChecklistFormStepOne() {
         }}
         inputProps={{
           placeholder: 'Cidade',
-          onSubmitEditing: handleSubmit(handleNextStep),
+          onSubmitEditing: () => latitudeRef.current?.focus(),
         }}
         error={errors?.city?.message}
       />
 
-      <Button title="Continuar" onPress={handleSubmit(handleNextStep)} />
+      <Input
+        ref={latitudeRef}
+        icon="map"
+        formProps={{
+          name: 'latitude',
+          control,
+          rules: {
+            required: 'Latitude é obrigatória',
+          },
+        }}
+        inputProps={{
+          placeholder: 'Latitude',
+          onSubmitEditing: () => longitudeRef.current?.focus(),
+        }}
+        error={errors?.latitude?.message}
+      />
+
+      <Input
+        ref={longitudeRef}
+        icon="map"
+        formProps={{
+          name: 'longitude',
+          control,
+          rules: {
+            required: 'Longitude é obrigatória',
+          },
+        }}
+        inputProps={{
+          placeholder: 'Longitude',
+          onSubmitEditing: handleSubmit(handleNextStep),
+        }}
+        error={errors?.longitude?.message}
+      />
+
+      <Button
+        title="Continuar"
+        onPress={handleSubmit(handleNextStep)}
+        disabled={!isValid}
+      />
     </Container>
   )
 }

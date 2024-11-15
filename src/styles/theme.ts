@@ -11,11 +11,14 @@ export default {
 
     line: '#EBEBF0',
 
-    main: '#DC1637',
+    error: '#DC1637',
     main_light: '#FDEDEF',
     success: '#03B252',
 
     shape: '#E1E1E8',
     shapeDark: '#29292E',
+    white: '#FFFFFF',
+    purple: '#8257e5',
+    gray: '#AEAEB3',
   },
 }

@@ -1,8 +1,8 @@
 import {registerChecklists} from './register-checklist'
-import {api} from '../libs/axios'
+import {api} from './axios'
 import {CreateChecklistBody} from './register-checklist'
 
-jest.mock('../libs/axios')
+jest.mock('./axios')
 
 const mockedApi = api as jest.Mocked<typeof api>
 

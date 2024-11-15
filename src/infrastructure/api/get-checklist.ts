@@ -1,4 +1,4 @@
-import {api} from '../libs/axios'
+import {api} from './axios'
 
 export interface GetChecklistQuery {
   _id: number

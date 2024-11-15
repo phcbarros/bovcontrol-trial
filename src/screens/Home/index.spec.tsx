@@ -2,7 +2,7 @@ import {fireEvent, render, RenderAPI} from '@testing-library/react-native'
 import {Home} from '.'
 import {ThemeProvider} from 'styled-components/native'
 import theme from '../../styles/theme'
-import {Query, QueryClientProvider} from '@tanstack/react-query'
+import {QueryClientProvider} from '@tanstack/react-query'
 import {queryClient} from '../../libs/react-query'
 import {useNavigation, useRoute} from '@react-navigation/native'
 
@@ -54,5 +54,16 @@ describe('Home', () => {
         created_at: '2024-11-13T22:40:34.279Z',
       },
     })
+  })
+
+  it('deve navegar para a tela de novo checklist', async () => {
+    const useNavigationMock = useNavigation().navigate as jest.Mock
+
+    const card = wrapper.getByText('Novo Checklist')
+    fireEvent.press(card)
+
+    expect(useNavigationMock).toHaveBeenCalledWith(
+      'registerChecklistFormStepOne',
+    )
   })
 })

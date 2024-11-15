@@ -1,6 +1,9 @@
 import {useQuery} from '@tanstack/react-query'
 import {Container, List, Title} from './styles'
-import {getChecklist, GetChecklistQuery} from '../../api/get-check'
+import {
+  getChecklist,
+  GetChecklistQuery,
+} from '../../infrastructure/api/get-checklist'
 import {Card} from './Card'
 import {useNavigation} from '@react-navigation/native'
 import {Button} from '../../components/Button'
@@ -20,7 +23,7 @@ export function Home() {
   }
 
   function handlerAddNewChecklist() {
-    navigate('checkListFormStepOne')
+    navigate('registerChecklistFormStepOne')
   }
 
   return (

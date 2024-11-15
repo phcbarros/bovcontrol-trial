@@ -1,27 +1,77 @@
-import {Button, TextInput, Text} from 'react-native'
-import {Input} from '../../components/Input'
+import {TextInput, Alert} from 'react-native'
+import {Input} from '../../../components/Input'
 import {Container, Title} from './styles'
 import {Controller, useForm, useFormContext} from 'react-hook-form'
 import {useRef} from 'react'
 import {z} from 'zod'
-import {Switch} from '../../components/Switch'
+import {Switch} from '../../../components/Switch'
+import {useMutation} from '@tanstack/react-query'
+import {
+  registerChecklists,
+  CreateChecklistBody,
+} from '../../../infrastructure/api/register-checklist'
+import {RegisterChecklistFormData} from '../../../@types/checklist'
+import {generateRandomId} from '../../../utils/generate-random-id'
+import {useNavigation} from '@react-navigation/native'
+import {Button} from '../../../components/Button'
 
 const checklistTypeEnum = z.enum(['antibiotico', 'antibiótico', 'bpa', 'bcp'])
 
-export function ChecklistFormStepTwo() {
+export function RegisterChecklistFormStepTwo() {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isValid},
     getValues,
-  } = useFormContext()
+  } = useFormContext<RegisterChecklistFormData>()
 
   const checklistTypeRef = useRef<TextInput>(null)
-  const quantityOfMilkProducedRef = useRef<TextInput>(null)
-  const quantityOfCowsHeadRef = useRef<TextInput>(null)
+  const amountOfMilkProducedRef = useRef<TextInput>(null)
+  const numberOfCowsHeadRef = useRef<TextInput>(null)
 
-  function handleNextStep(data: any) {
-    console.log(data)
+  const {mutateAsync: registerChecklistsFn} = useMutation({
+    mutationFn: registerChecklists,
+  })
+
+  const {navigate} = useNavigation()
+
+  async function handleCreateChecklist(data: RegisterChecklistFormData) {
+    try {
+      const registerChecklists: CreateChecklistBody = {
+        checklists: [
+          {
+            _id: String(generateRandomId()),
+            to: {
+              name: data.supervisor,
+            },
+            from: {
+              name: data.farmer,
+            },
+            type: data.checklistType,
+            amount_of_milk_produced: Number(data.amountOfMilkProduced),
+            number_of_cows_head: Number(data.numberOfCowsHead),
+            had_supervision: data.hadSupervision,
+            farmer: {
+              name: data.farm,
+              city: data.city,
+            },
+            location: {
+              latitude: Number(data.latitude),
+              longitude: Number(data.longitude),
+            },
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+        ],
+      }
+
+      await registerChecklistsFn(registerChecklists)
+      Alert.alert('Sucesso', 'Checklist cadastrado com sucesso')
+
+      navigate('home')
+    } catch (error) {
+      Alert.alert('Erro', 'Erro ao cadastrar checklist! ')
+    }
   }
 
   function isValidChecklistType(): boolean | string {
@@ -80,17 +130,17 @@ export function ChecklistFormStepTwo() {
         }}
         inputProps={{
           placeholder: 'Tipo de checklist',
-          onSubmitEditing: () => quantityOfMilkProducedRef.current?.focus(),
+          onSubmitEditing: () => amountOfMilkProducedRef.current?.focus(),
           returnKeyType: 'next',
         }}
         error={errors?.checklistType?.message}
       />
 
       <Input
-        ref={quantityOfMilkProducedRef}
+        ref={amountOfMilkProducedRef}
         icon="cow"
         formProps={{
-          name: 'quantityOfMilkProduced',
+          name: 'amountOfMilkProduced',
           control,
           rules: {
             required: 'Quantidade de leite produzido é obrigatório',
@@ -99,17 +149,17 @@ export function ChecklistFormStepTwo() {
         }}
         inputProps={{
           placeholder: 'Quantidade de leite produzido',
-          onSubmitEditing: () => quantityOfCowsHeadRef.current?.focus(),
+          onSubmitEditing: () => numberOfCowsHeadRef.current?.focus(),
           keyboardType: 'numeric',
         }}
-        error={errors?.quantityOfMilkProduced?.message}
+        error={errors?.amountOfMilkProduced?.message}
       />
 
       <Input
-        ref={quantityOfCowsHeadRef}
+        ref={numberOfCowsHeadRef}
         icon="cow"
         formProps={{
-          name: 'quantityOfCowsHead',
+          name: 'numberOfCowsHead',
           control,
           rules: {
             required: 'Quantidade de cabeça de gado é obrigatório',
@@ -118,10 +168,9 @@ export function ChecklistFormStepTwo() {
         }}
         inputProps={{
           placeholder: 'Quantidade de cabeça de gado',
-          onSubmitEditing: handleSubmit(handleNextStep),
           keyboardType: 'numeric',
         }}
-        error={errors?.quantityOfCowsHead?.message}
+        error={errors?.numberOfCowsHead?.message}
       />
 
       <Switch
@@ -130,7 +179,11 @@ export function ChecklistFormStepTwo() {
         error={errors?.hadSupervision?.message}
       />
 
-      <Button title="Continuar" onPress={handleSubmit(handleNextStep)} />
+      <Button
+        title="Continuar"
+        onPress={handleSubmit(handleCreateChecklist)}
+        disabled={!isValid}
+      />
     </Container>
   )
 }

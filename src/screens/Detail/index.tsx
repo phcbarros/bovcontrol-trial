@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {Container, Label, Scroll} from './styles'
 import {Text} from 'react-native'
-import {GetChecklistQuery} from '../../api/get-check'
+import {GetChecklistQuery} from '../../api/get-checklist'
 import {format} from 'date-fns'
 import {ptBR} from 'date-fns/locale/pt-BR'
 import {Item} from './Item'

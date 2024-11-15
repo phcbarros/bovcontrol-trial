@@ -1,7 +1,7 @@
 import {getChecklist} from './get-checklist'
-import {api} from '../libs/axios'
+import {api} from './axios'
 
-jest.mock('../libs/axios')
+jest.mock('./axios')
 const mockedApi = api as jest.Mocked<typeof api>
 
 describe('API getChecklist', () => {
