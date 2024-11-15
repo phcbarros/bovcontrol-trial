@@ -2,8 +2,8 @@ import {Detail} from '../screens/Detail'
 import {Home} from '../screens/Home'
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import {ChecklistFormStepOne} from '../screens/ChecklistFormStepOne'
-import {ChecklistFormStepTwo} from '../screens/ChecklistFormStepTwo'
+import {ChecklistFormStepOne} from '../screens/RegisterChecklistFormStepOne'
+import {RegisterChecklistFormStepTwo} from '../screens/RegisterChecklistFormStepTwo'
 
 const {Navigator, Screen} = createNativeStackNavigator()
 
@@ -23,7 +23,7 @@ export function ChecklistRoutes() {
       />
       <Screen
         name="checkListFormStepTwo"
-        component={ChecklistFormStepTwo}
+        component={RegisterChecklistFormStepTwo}
         options={{title: 'Novo Checklist'}}
       />
     </Navigator>
