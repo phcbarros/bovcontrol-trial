@@ -1,19 +1,27 @@
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {Container, Label, Scroll} from './styles'
-import {Text} from 'react-native'
-import {GetChecklistQuery} from '../../api/get-checklist'
+import {GetChecklistQuery} from '../../infrastructure/api/get-checklist'
 import {format} from 'date-fns'
 import {ptBR} from 'date-fns/locale/pt-BR'
 import {Item} from './Item'
+import {Button} from '../../components/Button'
 
 export function Detail() {
   const {params} = useRoute()
+
+  const {navigate} = useNavigation()
 
   if (!params) {
     return null
   }
 
   const checklist = params.item as GetChecklistQuery
+
+  function handleUpdate(item: GetChecklistQuery) {
+    navigate('updateChecklistForm', {
+      item,
+    })
+  }
 
   return (
     <Container>
@@ -63,6 +71,8 @@ export function Detail() {
           />
         )}
       </Scroll>
+
+      <Button title="Atualizar" onPress={() => handleUpdate(checklist)} />
     </Container>
   )
 }

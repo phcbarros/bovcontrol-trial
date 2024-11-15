@@ -62,8 +62,6 @@ describe('Home', () => {
     const card = wrapper.getByText('Novo Checklist')
     fireEvent.press(card)
 
-    expect(useNavigationMock).toHaveBeenCalledWith(
-      'registerChecklistFormStepOne',
-    )
+    expect(useNavigationMock).toHaveBeenCalledWith('registerChecklistForm')
   })
 })

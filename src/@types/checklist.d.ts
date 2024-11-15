@@ -10,3 +10,7 @@ export type RegisterChecklistFormData = {
   latitude: string
   longitude: string
 }
+
+export type UpdateChecklistFormData = RegisterChecklistFormData & {
+  id: string
+}

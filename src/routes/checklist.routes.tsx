@@ -2,10 +2,10 @@ import {Detail} from '../screens/Detail'
 import {Home} from '../screens/Home'
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import {ChecklistFormStepOne} from '../screens/register-checklist/RegisterChecklistFormStepOne'
-import {RegisterChecklistFormStepTwo} from '../screens/register-checklist/RegisterChecklistFormStepTwo'
+import {RegisterChecklistForm} from '../screens/RegisterChecklistForm'
+import {UpdateChecklistForm} from '../screens/UpdateChecklistForm'
 
-const {Navigator, Screen} = createNativeStackNavigator()
+const {Navigator, Screen, Group} = createNativeStackNavigator()
 
 export function ChecklistRoutes() {
   return (
@@ -16,15 +16,17 @@ export function ChecklistRoutes() {
         options={{title: 'Checklist', headerShown: false}}
       />
       <Screen name="detail" component={Detail} options={{title: 'Detalhes'}} />
+
       <Screen
-        name="registerChecklistFormStepOne"
-        component={ChecklistFormStepOne}
         options={{title: 'Novo Checklist'}}
+        name="registerChecklistForm"
+        component={RegisterChecklistForm}
       />
+
       <Screen
-        name="registerChecklistFormStepTwo"
-        component={RegisterChecklistFormStepTwo}
-        options={{title: 'Novo Checklist'}}
+        options={{title: 'Atualizar Checklist'}}
+        name="updateChecklistFormStep"
+        component={UpdateChecklistForm}
       />
     </Navigator>
   )

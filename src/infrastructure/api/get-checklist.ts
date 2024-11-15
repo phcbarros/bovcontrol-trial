@@ -1,7 +1,7 @@
 import {api} from './axios'
 
 export interface GetChecklistQuery {
-  _id: number
+  _id: string
   type: string
   amount_of_milk_produced: string
   farmer: {
