@@ -1,3 +1,4 @@
+import {AxiosError} from 'axios'
 import {api} from './axios'
 
 export interface CreateChecklistBody {
@@ -26,8 +27,18 @@ export interface CreateChecklistBody {
   }[]
 }
 
-export async function registerChecklists(data: CreateChecklistBody) {
-  const response = await api.post<CreateChecklistBody>('/checklist', data)
+export async function registerChecklists(
+  data: CreateChecklistBody,
+): Promise<CreateChecklistBody | null> {
+  try {
+    const response = await api.post<CreateChecklistBody>('/checklist', data)
 
-  return response.data
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(`registerChecklists: ${error.message}`)
+    }
+
+    throw new Error('registerChecklist: unknown error')
+  }
 }

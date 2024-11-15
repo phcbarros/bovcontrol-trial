@@ -1,6 +1,7 @@
 import {registerChecklists} from './register-checklist'
 import {api} from './axios'
 import {CreateChecklistBody} from './register-checklist'
+import {Axios, AxiosError} from 'axios'
 
 jest.mock('./axios')
 
@@ -49,7 +50,7 @@ describe('API registerChecklists', () => {
   })
 
   it('deve retornar um erro quando ocorrer um erro na API', async () => {
-    const mockError = new Error('API error')
+    const mockError = new AxiosError('API error')
 
     mockedApi.post.mockRejectedValue(mockError)
 
@@ -81,6 +82,15 @@ describe('API registerChecklists', () => {
       ],
     }
 
-    await expect(registerChecklists(data)).rejects.toThrow(mockError)
+    await expect(registerChecklists(data)).rejects.toThrow(
+      'registerChecklists: API error',
+    )
+  })
+
+  it('deve lançar erro quando ocorrer um erro desconhecido', async () => {
+    const data = {} as any
+
+    mockedApi.post.mockRejectedValue(new Error('unknown error'))
+    await expect(registerChecklists(data)).rejects.toThrow(Error)
   })
 })
