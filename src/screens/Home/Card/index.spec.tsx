@@ -8,16 +8,18 @@ describe('Card', () => {
 
   beforeEach(() => {
     const checklist = {
-      from: {name: 'Fazendeiro 1'},
-      farmer: {city: 'cidade', name: 'Fazenda 1'},
-      created_at: '2024-11-13T22:40:34.279Z',
+      farmer: 'Fazendeiro 1',
+      farm: 'Fazenda 1',
+      city: 'cidade',
+      createdAt: '2024-11-13T22:40:34.279Z',
     }
 
     wrapper = render(
       <Card
         farmer={checklist.farmer}
-        from={checklist.from}
-        created_at={checklist.created_at}
+        farm={checklist.farm}
+        city={checklist.city}
+        createdAt={checklist.createdAt}
       />,
       {
         wrapper: ({children}) => (

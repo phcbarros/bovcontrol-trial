@@ -7,6 +7,7 @@ import {Item} from './Item'
 import {Button} from '../../components/Button'
 import {AppRoutes} from '../../routes/app-routes'
 import {View, Text} from 'react-native'
+import {Checklist} from '../../types/checklist'
 
 export function Detail() {
   const {params} = useRoute()
@@ -17,7 +18,7 @@ export function Detail() {
     return null
   }
 
-  const checklist = params.item as GetChecklistQuery
+  const checklist = params.item as Checklist
 
   function handleUpdate(item: GetChecklistQuery) {
     navigate(AppRoutes.UpdateChecklist, {
@@ -28,46 +29,46 @@ export function Detail() {
   return (
     <Container>
       <Scroll>
-        <Item label="Fazendeiro" value={checklist.from.name} />
+        <Item label="Fazendeiro" value={checklist.farmer} />
 
         <Item label="Tipo" value={checklist.type} />
 
         <Item
           label="Quantidade de leite produzido"
-          value={checklist.amount_of_milk_produced}
+          value={String(checklist.amountOfMilkProduced)}
         />
 
-        <Item label="Fazenda" value={checklist.farmer.name} />
+        <Item label="Fazenda" value={checklist.farm} />
 
-        <Item label="Cidade" value={checklist.farmer.city} />
+        <Item label="Cidade" value={checklist.city} />
 
-        <Item label="Latitude" value={checklist.location.latitude} />
+        <Item label="Latitude" value={String(checklist.latitude)} />
 
-        <Item label="Longitude" value={checklist.location.longitude} />
+        <Item label="Longitude" value={String(checklist.longitude)} />
 
-        <Item label="Supervisor" value={checklist.to.name} />
+        <Item label="Supervisor" value={checklist.supervisor} />
 
         <Item
           label="Quantidade de cabeças"
-          value={checklist.number_of_cows_head}
+          value={String(checklist.numberOfCowsHead)}
         />
 
         <Item
           label="Supervisor"
-          value={checklist.had_supervision ? 'Sim' : 'Não'}
+          value={checklist.hadSupervision ? 'Sim' : 'Não'}
         />
 
         <Item
           label="Data de criação"
-          value={format(new Date(checklist.created_at), 'dd/MM/yyyy', {
+          value={format(new Date(String(checklist.createdAt)), 'dd/MM/yyyy', {
             locale: ptBR,
           })}
         />
 
-        {checklist.updated_at && (
+        {checklist.updatedAt && (
           <Item
             label="Data de atualização"
-            value={format(new Date(checklist.updated_at), 'dd/MM/yyyy', {
+            value={format(new Date(String(checklist.updatedAt)), 'dd/MM/yyyy', {
               locale: ptBR,
             })}
           />

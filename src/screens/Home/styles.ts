@@ -2,27 +2,11 @@ import {FlatList} from 'react-native'
 import styled from 'styled-components/native'
 
 type ChecklistProps = {
-  _id: number
-  type: string
-  amount_of_milk_produced: string
-  farmer: {
-    name: string
-    city: string
-  }
-  from: {
-    name: string
-  }
-  to: {
-    name: string
-  }
-  number_of_cows_head: string
-  had_supervision: true
-  location: {
-    latitude: string
-    longitude: string
-  }
-  created_at: string
-  updated_at: string
+  id: number
+  farm: string
+  city: string
+  farmer: string
+  createdAt: string
 }
 
 export const Container = styled.View`

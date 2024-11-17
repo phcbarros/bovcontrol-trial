@@ -3,38 +3,44 @@ import {FormProvider, useForm, useFormContext} from 'react-hook-form'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {UpdateChecklistFormData} from '../../@types/checklist'
 import {ChecklistForm} from '../../components/ChecklistForm'
-import {GetChecklistQuery} from '../../infrastructure/api/get-checklist'
 import {
   updateChecklist,
   UpdateChecklistBody,
 } from '../../infrastructure/api/update-checklist'
 import {useMutation} from '@tanstack/react-query'
-import {Alert} from 'react-native'
+import {Alert, KeyboardAvoidingView, Platform} from 'react-native'
 import {AppRoutes} from '../../routes/app-routes'
+import {useRealm} from '../../libs/realm'
+import {useNetInfo} from '@react-native-community/netinfo'
+import {ChecklistSchema} from '../../libs/realm/schemas/checklist'
+import {queryClient} from '../../libs/react-query'
+import {Checklist} from '../../types/checklist'
 
 export function UpdateChecklistForm() {
   const {params} = useRoute()
+  const item = params.item as Checklist
 
-  const item = params.item as GetChecklistQuery
+  const {navigate} = useNavigation()
+
+  const realm = useRealm()
+  const netInfo = useNetInfo()
 
   const updateChecklistForm = useForm<UpdateChecklistFormData>({
     defaultValues: {
-      id: item._id,
-      farmer: item.from.name,
-      city: item.farmer.city,
-      farm: item.farmer.name,
-      latitude: String(item.location.latitude),
-      longitude: String(item.location.longitude),
-      supervisor: item.to.name,
+      id: item.id,
+      farmer: item.farmer,
+      city: item.city,
+      farm: item.farm,
+      latitude: String(item.latitude),
+      longitude: String(item.longitude),
+      supervisor: item.supervisor,
       checklistType: item.type,
-      amountOfMilkProduced: String(item.amount_of_milk_produced),
-      numberOfCowsHead: String(item.number_of_cows_head),
-      hadSupervision: item.had_supervision,
+      amountOfMilkProduced: String(item.amountOfMilkProduced),
+      numberOfCowsHead: String(item.numberOfCowsHead),
+      hadSupervision: item.hadSupervision,
     },
     mode: 'onChange',
   })
-
-  const {navigate} = useNavigation()
 
   const {mutateAsync: updateChecklistFn} = useMutation({
     mutationFn: ({
@@ -45,6 +51,16 @@ export function UpdateChecklistForm() {
       checklist: UpdateChecklistBody
     }) => {
       return updateChecklist(id, checklist)
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.setQueryData(['checklists'], (oldChecklists) => {
+        return oldChecklists?.map((checklist) => {
+          if (checklist._id === item.id) {
+            return variables.checklist
+          }
+          return checklist
+        })
+      })
     },
   })
 
@@ -73,7 +89,22 @@ export function UpdateChecklistForm() {
         updated_at: new Date().toISOString(),
       }
 
-      await updateChecklistFn({id: data.id, checklist: updatedChecklist})
+      if (netInfo.isConnected) {
+        await updateChecklistFn({id: data.id, checklist: updatedChecklist})
+      } else {
+        realm.write(() => {
+          realm.create(
+            'Checklist',
+            ChecklistSchema.generate({
+              ...updatedChecklist,
+              sync: false,
+              _id: data.id,
+            }),
+            'modified',
+          )
+        })
+      }
+
       Alert.alert('Sucesso', 'Checklist atualizado com sucesso.', [
         {
           text: 'OK',
@@ -83,15 +114,20 @@ export function UpdateChecklistForm() {
 
       // todo invalidar cache
     } catch (error) {
+      console.log(error)
       Alert.alert('Erro', 'Erro ao atualizar o checklist!')
     }
   }
 
   return (
-    <Container>
-      <FormProvider {...updateChecklistForm}>
-        <ChecklistForm handleOnPress={handleUpdateChecklist} />
-      </FormProvider>
-    </Container>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}>
+      <Container>
+        <FormProvider {...updateChecklistForm}>
+          <ChecklistForm handleOnPress={handleUpdateChecklist} />
+        </FormProvider>
+      </Container>
+    </KeyboardAvoidingView>
   )
 }

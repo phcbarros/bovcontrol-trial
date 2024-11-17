@@ -13,16 +13,18 @@ jest.mock('@tanstack/react-query', () => ({
 
 const params = {
   item: {
-    _id: 1,
-    from: {name: 'Fazendeiro 1'},
-    farmer: {city: 'Mogi', name: 'Fazenda 1'},
-    created_at: '2024-11-13T22:40:34.279Z',
-    to: {name: 'Supervisor 1'},
-    location: {latitude: -23.33, longitude: 24.44},
+    id: 1,
+    farmer: 'Fazendeiro 1',
+    city: 'Mogi',
+    farm: 'Fazenda 1',
+    createdAt: '2024-11-13T22:40:34.279Z',
+    supervisor: 'Supervisor 1',
+    latitude: -23.33,
+    longitude: 24.44,
     type: 'BCP',
-    amount_of_milk_produced: '1000',
-    number_of_cows_head: '10',
-    had_supervision: true,
+    amountOfMilkProduced: '1000',
+    numberOfCowsHead: '10',
+    hadSupervision: true,
   },
 }
 

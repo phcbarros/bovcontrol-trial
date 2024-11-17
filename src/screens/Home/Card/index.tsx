@@ -4,35 +4,31 @@ import {ptBR} from 'date-fns/locale/pt-BR'
 import {TouchableOpacityProps} from 'react-native'
 
 type Props = TouchableOpacityProps & {
-  farmer: {
-    name: string
-    city: string
-  }
-  from: {
-    name: string
-  }
-  created_at: string
+  farmer: string
+  farm: string
+  city: string
+  createdAt: string
 }
 
-export function Card({from, farmer, created_at, ...rest}: Props) {
+export function Card({farmer, farm, city, createdAt, ...rest}: Props) {
   return (
     <Container {...rest}>
-      <CardTitle>{from.name}</CardTitle>
+      <CardTitle>{farmer}</CardTitle>
       <CardContent>
         <Content>
           <Label>Fazenda:</Label>
-          <Text>{farmer.name}</Text>
+          <Text>{farm}</Text>
         </Content>
 
         <Content>
           <Label>Cidade:</Label>
-          <Text>{farmer.city}</Text>
+          <Text>{city}</Text>
         </Content>
 
         <Content>
           <Label>Data:</Label>
           <Text>
-            {format(new Date(created_at), 'dd/MM/yyyy', {
+            {format(new Date(createdAt), 'dd/MM/yyyy', {
               locale: ptBR,
             })}
           </Text>

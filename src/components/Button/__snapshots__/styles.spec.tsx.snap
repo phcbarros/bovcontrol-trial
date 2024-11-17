@@ -33,6 +33,10 @@ exports[`Button.styles Container DEVE ser igual ao snapshot 1`] = `
     {
       "alignItems": "center",
       "backgroundColor": "#8257e5",
+      "borderBottomLeftRadius": 8,
+      "borderBottomRightRadius": 8,
+      "borderTopLeftRadius": 8,
+      "borderTopRightRadius": 8,
       "height": 56,
       "justifyContent": "center",
       "opacity": 1,

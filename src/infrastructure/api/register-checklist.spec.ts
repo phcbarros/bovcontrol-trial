@@ -1,7 +1,7 @@
 import {registerChecklists} from './register-checklist'
 import {api} from './axios'
 import {CreateChecklistBody} from './register-checklist'
-import {Axios, AxiosError} from 'axios'
+import {AxiosError} from 'axios'
 
 jest.mock('./axios')
 
