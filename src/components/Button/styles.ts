@@ -7,6 +7,7 @@ export const Container = styled.TouchableOpacity`
     disabled ? theme.COLORS.gray : theme.COLORS.purple};
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
 `
 
 export const Title = styled.Text`
