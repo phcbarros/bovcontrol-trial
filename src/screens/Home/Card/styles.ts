@@ -1,10 +1,23 @@
 import styled from 'styled-components/native'
 
 export const Container = styled.TouchableOpacity`
-  background-color: ${({theme}) => theme.COLORS.backgroundPrimary};
+  background-color: ${({theme}) => theme.COLORS.backgroundSecondary};
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+`
+
+export const TitleContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+export const Icon = styled.View`
+  width: 24px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 `
 
 export const CardTitle = styled.Text`
@@ -28,5 +41,5 @@ export const Label = styled.Text`
 `
 
 export const Text = styled(Label)`
-  color: ${({theme}) => theme.COLORS.textDetail};
+  color: ${({theme}) => theme.COLORS.black};
 `

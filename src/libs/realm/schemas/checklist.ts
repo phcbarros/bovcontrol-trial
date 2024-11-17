@@ -1,31 +1,6 @@
 import {Realm} from '@realm/react'
 import {ObjectSchema} from 'realm'
 
-type GenerateProps = {
-  _id: string
-  type: string
-  amount_of_milk_produced: number
-  farmer: {
-    name: string
-    city: string
-  }
-  from: {
-    name: string
-  }
-  to: {
-    name: string
-  }
-  location: {
-    latitude: number
-    longitude: number
-  }
-  number_of_cows_head: number
-  had_supervision: boolean
-  created_at: string
-  updated_at: string
-  sync: boolean
-}
-
 export class FarmSchema extends Realm.Object<FarmSchema> {
   name!: string
   city!: string
@@ -74,6 +49,32 @@ export class SupervisorSchema extends Realm.Object<SupervisorSchema> {
   }
 }
 
+type GenerateProps = {
+  _id: string
+  type: string
+  amount_of_milk_produced: number
+  farmer: {
+    name: string
+    city: string
+  }
+  from: {
+    name: string
+  }
+  to: {
+    name: string
+  }
+  location: {
+    latitude: number
+    longitude: number
+  }
+  number_of_cows_head: number
+  had_supervision: boolean
+  created_at: string
+  updated_at: string
+  sync: boolean
+  action: 'register' | 'update'
+}
+
 export class ChecklistSchema extends Realm.Object<ChecklistSchema> {
   _id!: string
   type!: string
@@ -97,6 +98,7 @@ export class ChecklistSchema extends Realm.Object<ChecklistSchema> {
   created_at!: string
   updated_at!: string
   sync!: boolean
+  action!: string
 
   static generate({
     _id,
@@ -111,6 +113,7 @@ export class ChecklistSchema extends Realm.Object<ChecklistSchema> {
     created_at,
     updated_at,
     sync,
+    action,
   }: GenerateProps) {
     return {
       _id,
@@ -125,6 +128,7 @@ export class ChecklistSchema extends Realm.Object<ChecklistSchema> {
       created_at,
       updated_at,
       sync,
+      action,
     }
   }
 
@@ -145,6 +149,7 @@ export class ChecklistSchema extends Realm.Object<ChecklistSchema> {
       created_at: 'date',
       updated_at: 'date',
       sync: 'bool',
+      action: 'string',
     },
   }
 }

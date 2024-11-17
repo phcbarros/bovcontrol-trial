@@ -84,7 +84,7 @@ export function RegisterChecklistForm() {
         ],
       }
 
-      if (netInfo.isConnected) {
+      if (!netInfo.isConnected) {
         await registerChecklistsFn(registerChecklists)
       } else {
         const newChecklist = registerChecklists.checklists[0]
@@ -92,7 +92,11 @@ export function RegisterChecklistForm() {
         realm.write(() => {
           realm.create(
             'Checklist',
-            Checklist.generate({...newChecklist, sync: false}),
+            ChecklistSchema.generate({
+              ...newChecklist,
+              sync: false,
+              action: 'register',
+            }),
           )
         })
       }

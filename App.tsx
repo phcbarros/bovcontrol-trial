@@ -13,6 +13,8 @@ import React from 'react'
 import {Loading} from './src/components/Loading'
 import {AppProvider} from '@realm/react'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
+import {RealmProvider} from './src/libs/realm'
+import {ChecklistProvider} from './src/context/checklist-context'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -34,7 +36,11 @@ export default function App() {
               backgroundColor="transparent"
               translucent
             />
-            <Routes />
+            <RealmProvider>
+              <ChecklistProvider>
+                <Routes />
+              </ChecklistProvider>
+            </RealmProvider>
           </SafeAreaProvider>
         </QueryClientProvider>
       </ThemeProvider>

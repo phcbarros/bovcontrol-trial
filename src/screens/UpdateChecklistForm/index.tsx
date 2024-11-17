@@ -1,5 +1,5 @@
 import {Container} from './styles'
-import {FormProvider, useForm, useFormContext} from 'react-hook-form'
+import {FormProvider, useForm} from 'react-hook-form'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {UpdateChecklistFormData} from '../../@types/checklist'
 import {ChecklistForm} from '../../components/ChecklistForm'
@@ -7,23 +7,23 @@ import {
   updateChecklist,
   UpdateChecklistBody,
 } from '../../infrastructure/api/update-checklist'
-import {useMutation} from '@tanstack/react-query'
+import {useMutation, useQuery} from '@tanstack/react-query'
 import {Alert, KeyboardAvoidingView, Platform} from 'react-native'
 import {AppRoutes} from '../../routes/app-routes'
-import {useRealm} from '../../libs/realm'
+import {useQueryRealm, useRealm} from '../../libs/realm'
 import {useNetInfo} from '@react-native-community/netinfo'
 import {ChecklistSchema} from '../../libs/realm/schemas/checklist'
 import {queryClient} from '../../libs/react-query'
 import {Checklist} from '../../types/checklist'
-import {transform} from '@babel/core'
-import {transformToChecklist} from '../../infrastructure/transformers'
 
 export function UpdateChecklistForm() {
   const {params} = useRoute()
-  const item = params.item as Checklist
+  const item = params!.item as Checklist
+  const checklistFromDB = useQueryRealm(ChecklistSchema, (checklist) => {
+    return checklist.filtered('_id = $0', String(item._id))
+  })
 
   const {navigate} = useNavigation()
-
   const realm = useRealm()
   const netInfo = useNetInfo()
 
@@ -87,7 +87,7 @@ export function UpdateChecklistForm() {
 
       console.log(updatedChecklist, item._id)
 
-      if (netInfo.isConnected) {
+      if (!netInfo.isConnected) {
         await updateChecklistFn({id: item._id, checklist: updatedChecklist})
       } else {
         realm.write(() => {
@@ -96,7 +96,11 @@ export function UpdateChecklistForm() {
             ChecklistSchema.generate({
               ...updatedChecklist,
               sync: false,
-              _id: data.id,
+              _id: String(data.id),
+              action:
+                checklistFromDB[0]?.action === 'register'
+                  ? 'register'
+                  : 'update',
             }),
             'modified',
           )

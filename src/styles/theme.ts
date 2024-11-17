@@ -20,6 +20,7 @@ export default {
     white: '#FFFFFF',
     purple: '#8257e5',
     gray: '#AEAEB3',
+    black: '#000000',
   },
   FONT_FAMILY: {
     REGULAR: 'Roboto_400Regular',
