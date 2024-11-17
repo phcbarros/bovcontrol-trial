@@ -15,6 +15,8 @@ import {useNetInfo} from '@react-native-community/netinfo'
 import {ChecklistSchema} from '../../libs/realm/schemas/checklist'
 import {queryClient} from '../../libs/react-query'
 import {Checklist} from '../../types/checklist'
+import {transform} from '@babel/core'
+import {transformToChecklist} from '../../infrastructure/transformers'
 
 export function UpdateChecklistForm() {
   const {params} = useRoute()
@@ -27,36 +29,30 @@ export function UpdateChecklistForm() {
 
   const updateChecklistForm = useForm<UpdateChecklistFormData>({
     defaultValues: {
-      id: item.id,
-      farmer: item.farmer,
-      city: item.city,
-      farm: item.farm,
-      latitude: String(item.latitude),
-      longitude: String(item.longitude),
-      supervisor: item.supervisor,
+      id: item._id,
+      farmer: item.from.name,
+      city: item.farmer.city,
+      farm: item.farmer.name,
+      latitude: String(item.location.latitude),
+      longitude: String(item.location.longitude),
+      supervisor: item.to.name,
       checklistType: item.type,
-      amountOfMilkProduced: String(item.amountOfMilkProduced),
-      numberOfCowsHead: String(item.numberOfCowsHead),
-      hadSupervision: item.hadSupervision,
+      amountOfMilkProduced: String(item.amount_of_milk_produced),
+      numberOfCowsHead: String(item.number_of_cows_head),
+      hadSupervision: item.had_supervision,
     },
     mode: 'onChange',
   })
 
   const {mutateAsync: updateChecklistFn} = useMutation({
-    mutationFn: ({
-      id,
-      checklist,
-    }: {
-      id: string
-      checklist: UpdateChecklistBody
-    }) => {
+    mutationFn: ({id, checklist}: {id: string; checklist: Checklist}) => {
       return updateChecklist(id, checklist)
     },
-    onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['checklists'], (oldChecklists) => {
+    onSuccess: (_, variables) => {
+      queryClient.setQueryData<Checklist[]>(['checklists'], (oldChecklists) => {
         return oldChecklists?.map((checklist) => {
-          if (checklist._id === item.id) {
-            return variables.checklist
+          if (checklist._id === item._id) {
+            return {...variables.checklist, _id: item._id}
           }
           return checklist
         })
@@ -89,8 +85,10 @@ export function UpdateChecklistForm() {
         updated_at: new Date().toISOString(),
       }
 
+      console.log(updatedChecklist, item._id)
+
       if (netInfo.isConnected) {
-        await updateChecklistFn({id: data.id, checklist: updatedChecklist})
+        await updateChecklistFn({id: item._id, checklist: updatedChecklist})
       } else {
         realm.write(() => {
           realm.create(

@@ -1,7 +1,8 @@
-export interface Checklist {
-  _id: string
+export interface UpdateChecklistBody {
   type: string
   amount_of_milk_produced: number
+  number_of_cows_head: number
+  had_supervision: boolean
   farmer: {
     name: string
     city: string
@@ -12,8 +13,6 @@ export interface Checklist {
   to: {
     name: string
   }
-  number_of_cows_head: number
-  had_supervision: boolean
   location: {
     latitude: number
     longitude: number

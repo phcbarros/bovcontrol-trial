@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native'
 import theme from '../../styles/theme'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {queryClient} from '../../libs/react-query'
-import {useNavigation, useRoute} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native'
 import {AppRoutes} from '../../routes/app-routes'
 
 jest.mock('@tanstack/react-query', () => ({
@@ -13,18 +13,16 @@ jest.mock('@tanstack/react-query', () => ({
 
 const params = {
   item: {
-    id: 1,
-    farmer: 'Fazendeiro 1',
-    city: 'Mogi',
-    farm: 'Fazenda 1',
-    createdAt: '2024-11-13T22:40:34.279Z',
-    supervisor: 'Supervisor 1',
-    latitude: -23.33,
-    longitude: 24.44,
+    _id: 1,
+    from: {name: 'Fazendeiro 1'},
+    farmer: {name: 'Fazenda 1', city: 'Mogi'},
+    to: {name: 'Supervisor 1'},
+    location: {latitude: -23.33, longitude: 24.44},
     type: 'BCP',
-    amountOfMilkProduced: '1000',
-    numberOfCowsHead: '10',
-    hadSupervision: true,
+    amount_of_milk_produced: '1000',
+    number_of_cows_head: '10',
+    had_supervision: true,
+    created_at: '2024-11-13T22:40:34.279Z',
   },
 }
 

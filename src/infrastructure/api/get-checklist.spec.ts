@@ -27,23 +27,7 @@ describe('API getChecklist', () => {
     mockedApi.get.mockResolvedValue(mockResponse)
 
     const result = await getChecklist()
-    expect(result).toEqual([
-      {
-        id: 1,
-        type: 'BPA',
-        amountOfMilkProduced: 10,
-        farm: 'fazenda',
-        city: 'cidade',
-        farmer: 'fazendeiro',
-        supervisor: 'supervisor',
-        numberOfCowsHead: 10,
-        hadSupervision: true,
-        latitude: 1,
-        longitude: 2,
-        createdAt: '2024-11-13T22:40:34.279Z',
-        updatedAt: '2024-11-13T22:40:34.279Z',
-      },
-    ])
+    expect(result).toEqual(mockResponse.data)
   })
 
   it('deve retornar um erro ao falhar na chamada da API', async () => {

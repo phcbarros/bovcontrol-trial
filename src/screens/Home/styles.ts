@@ -1,13 +1,8 @@
 import {FlatList} from 'react-native'
 import styled from 'styled-components/native'
+import {Checklist} from '../../types/checklist'
 
-type ChecklistProps = {
-  id: number
-  farm: string
-  city: string
-  farmer: string
-  createdAt: string
-}
+type ChecklistProps = Pick<Checklist, '_id' | 'from' | 'created_at' | 'farmer'>
 
 export const Container = styled.View`
   flex: 1;

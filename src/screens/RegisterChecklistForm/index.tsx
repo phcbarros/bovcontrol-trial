@@ -16,6 +16,7 @@ import {useRealm} from '../../libs/realm'
 import {ChecklistSchema} from '../../libs/realm/schemas/checklist'
 import {queryClient} from '../../libs/react-query'
 import {useNetInfo} from '@react-native-community/netinfo'
+import {Checklist} from '../../types/checklist'
 
 export function RegisterChecklistForm() {
   const {navigate} = useNavigation()
@@ -40,16 +41,17 @@ export function RegisterChecklistForm() {
 
   const {mutateAsync: registerChecklistsFn} = useMutation({
     mutationFn: registerChecklists,
-    onSuccess: (data) => {
-      updateChecklistOnCache(data)
+    onSuccess: (data, variables) => {
+      updateChecklistOnCache(variables)
     },
   })
 
   function updateChecklistOnCache(newChecklist: CreateChecklistBody) {
-    queryClient.setQueryData<GetChecklistQuery[]>(
-      ['checklists'],
-      (oldChecklists) => [newChecklist.checklists[0], ...(oldChecklists || [])],
-    )
+    const data = newChecklist.checklists[0]
+    queryClient.setQueryData<Checklist[]>(['checklists'], (oldChecklists) => [
+      data,
+      ...(oldChecklists || []),
+    ])
   }
 
   async function handleCreateChecklist(data: RegisterChecklistFormData) {
@@ -90,7 +92,7 @@ export function RegisterChecklistForm() {
         realm.write(() => {
           realm.create(
             'Checklist',
-            ChecklistSchema.generate({...newChecklist, sync: false}),
+            Checklist.generate({...newChecklist, sync: false}),
           )
         })
       }
