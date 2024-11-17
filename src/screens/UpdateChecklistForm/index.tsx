@@ -85,7 +85,7 @@ export function UpdateChecklistForm() {
         updated_at: new Date().toISOString(),
       }
 
-      console.log(updatedChecklist, item._id)
+      console.log(updatedChecklist, checklistFromDB)
 
       if (!netInfo.isConnected) {
         await updateChecklistFn({id: item._id, checklist: updatedChecklist})
@@ -114,7 +114,7 @@ export function UpdateChecklistForm() {
         },
       ])
 
-      // todo invalidar cache
+      queryClient.invalidateQueries({queryKey: ['checklists']})
     } catch (error) {
       console.log(error)
       Alert.alert('Erro', 'Erro ao atualizar o checklist!')

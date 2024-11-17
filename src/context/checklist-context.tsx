@@ -15,6 +15,7 @@ import {
 import {Checklist} from '../types/checklist'
 import {Alert} from 'react-native'
 import {updateChecklist} from '../infrastructure/api/update-checklist'
+import {queryClient} from '../libs/react-query'
 
 type ChecklistContextProps = {
   syncChecklists: () => Promise<void>
@@ -36,6 +37,8 @@ export const ChecklistProvider = ({children}: Props) => {
       const outOfSyncChecklists = checklistsQuery.filtered(
         "sync = false && action = 'register'",
       )
+
+      console.log(outOfSyncChecklists)
 
       if (outOfSyncChecklists.length === 0) {
         return
@@ -141,6 +144,7 @@ export const ChecklistProvider = ({children}: Props) => {
 
     registerChecklistsFn()
     updateChecklistsFn()
+    queryClient.invalidateQueries({queryKey: ['checklists']})
   }
 
   useEffect(() => {
