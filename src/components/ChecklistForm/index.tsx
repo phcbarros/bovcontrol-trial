@@ -26,7 +26,7 @@ export function ChecklistForm({handleOnPress}: Props) {
     control,
     handleSubmit,
     getValues,
-    formState: {errors, isValid},
+    formState: {errors, isValid, isSubmitting},
   } = useFormContext()
 
   const farmRef = useRef<TextInput>(null)
@@ -240,7 +240,7 @@ export function ChecklistForm({handleOnPress}: Props) {
         <Button
           title="Salvar"
           onPress={handleSubmit(handleOnPress)}
-          disabled={!isValid}
+          disabled={!isValid || isSubmitting}
         />
       </Form>
     </Container>

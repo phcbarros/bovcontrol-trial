@@ -4,13 +4,13 @@ export const Container = styled.TouchableOpacity`
   width: 100%;
   height: 56px;
   background-color: ${({disabled, theme}) =>
-    disabled ? theme.colors.gray : theme.colors.purple};
+    disabled ? theme.COLORS.gray : theme.COLORS.purple};
   justify-content: center;
   align-items: center;
 `
 
 export const Title = styled.Text`
   color: #fff;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${({theme}) => theme.FONT_SIZE.LG}px;
+  font-family: ${({theme}) => theme.FONT_FAMILY.BOLD};
 `

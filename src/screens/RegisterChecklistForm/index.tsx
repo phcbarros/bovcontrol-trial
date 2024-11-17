@@ -2,7 +2,7 @@ import {Container} from './styles'
 import {FormProvider, useForm} from 'react-hook-form'
 import {RegisterChecklistFormData} from '../../@types/checklist'
 import {ChecklistForm} from '../../components/ChecklistForm'
-import {Alert} from 'react-native'
+import {Alert, AppRegistry} from 'react-native'
 import {
   CreateChecklistBody,
   registerChecklists,
@@ -10,6 +10,7 @@ import {
 import {generateRandomId} from '../../utils/generate-random-id'
 import {useMutation} from '@tanstack/react-query'
 import {useNavigation} from '@react-navigation/native'
+import {AppRoutes} from '../../routes/app-routes'
 
 export function RegisterChecklistForm() {
   const registerChecklistForm = useForm<RegisterChecklistFormData>({
@@ -57,11 +58,11 @@ export function RegisterChecklistForm() {
       Alert.alert('Sucesso', 'Checklist cadastrado com sucesso', [
         {
           text: 'Ok',
-          onPress: () => navigate('home'),
+          onPress: () => navigate(AppRoutes.Home),
         },
       ])
     } catch (error) {
-      Alert.alert('Erro', 'Erro ao cadastrar checklist! ')
+      Alert.alert('Erro', 'Erro ao cadastrar checklist!')
     }
   }
 

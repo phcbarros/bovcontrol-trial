@@ -7,7 +7,7 @@ export const Container = styled.ScrollView.attrs({
 
 export const Form = styled.View`
   width: 100%;
-  background-color: ${({theme}) => theme.colors.backgroundPrimary};
+  background-color: ${({theme}) => theme.COLORS.backgroundPrimary};
   padding: 20px;
   gap: 16px;
 `

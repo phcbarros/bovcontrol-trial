@@ -5,6 +5,8 @@ import {format} from 'date-fns'
 import {ptBR} from 'date-fns/locale/pt-BR'
 import {Item} from './Item'
 import {Button} from '../../components/Button'
+import {AppRoutes} from '../../routes/app-routes'
+import {View, Text} from 'react-native'
 
 export function Detail() {
   const {params} = useRoute()
@@ -18,7 +20,7 @@ export function Detail() {
   const checklist = params.item as GetChecklistQuery
 
   function handleUpdate(item: GetChecklistQuery) {
-    navigate('updateChecklistForm', {
+    navigate(AppRoutes.UpdateChecklist, {
       item,
     })
   }
@@ -43,7 +45,7 @@ export function Detail() {
 
         <Item label="Longitude" value={checklist.location.longitude} />
 
-        <Item label="To" value={checklist.to.name} />
+        <Item label="Supervisor" value={checklist.to.name} />
 
         <Item
           label="Quantidade de cabeças"

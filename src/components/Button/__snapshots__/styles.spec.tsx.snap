@@ -47,8 +47,8 @@ exports[`Button.styles Title DEVE ser igual ao snapshot 1`] = `
   style={
     {
       "color": "#fff",
-      "fontSize": 16,
-      "fontWeight": "bold",
+      "fontFamily": "Roboto_700Bold",
+      "fontSize": 18,
     }
   }
 />

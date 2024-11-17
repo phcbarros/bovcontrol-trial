@@ -5,6 +5,7 @@ import theme from '../../styles/theme'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {queryClient} from '../../libs/react-query'
 import {useNavigation, useRoute} from '@react-navigation/native'
+import {AppRoutes} from '../../routes/app-routes'
 
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
@@ -62,6 +63,6 @@ describe('Home', () => {
     const card = wrapper.getByText('Novo Checklist')
     fireEvent.press(card)
 
-    expect(useNavigationMock).toHaveBeenCalledWith('registerChecklistForm')
+    expect(useNavigationMock).toHaveBeenCalledWith(AppRoutes.RegisterChecklist)
   })
 })

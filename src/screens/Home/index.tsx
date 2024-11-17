@@ -8,6 +8,7 @@ import {Card} from './Card'
 import {useNavigation} from '@react-navigation/native'
 import {Button} from '../../components/Button'
 import {Title} from '../../components/Title'
+import {AppRoutes} from '../../routes/app-routes'
 
 export function Home() {
   const {data: checklist} = useQuery({
@@ -24,7 +25,7 @@ export function Home() {
   }
 
   function handlerAddNewChecklist() {
-    navigate('registerChecklistForm')
+    navigate(AppRoutes.RegisterChecklist)
   }
 
   return (

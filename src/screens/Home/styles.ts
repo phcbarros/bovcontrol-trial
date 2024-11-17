@@ -28,7 +28,7 @@ type ChecklistProps = {
 export const Container = styled.View`
   flex: 1;
   width: 100%;
-  background-color: ${({theme}) => theme.colors.backgroundSecondary};
+  background-color: ${({theme}) => theme.COLORS.backgroundSecondary};
   align-items: center;
   justify-content: center;
   gap: 10px;

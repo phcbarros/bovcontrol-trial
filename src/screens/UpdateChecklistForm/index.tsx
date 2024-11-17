@@ -10,6 +10,7 @@ import {
 } from '../../infrastructure/api/update-checklist'
 import {useMutation} from '@tanstack/react-query'
 import {Alert} from 'react-native'
+import {AppRoutes} from '../../routes/app-routes'
 
 export function UpdateChecklistForm() {
   const {params} = useRoute()
@@ -76,7 +77,7 @@ export function UpdateChecklistForm() {
       Alert.alert('Sucesso', 'Checklist atualizado com sucesso.', [
         {
           text: 'OK',
-          onPress: () => navigate('home'),
+          onPress: () => navigate(AppRoutes.Home),
         },
       ])
 

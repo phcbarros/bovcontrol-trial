@@ -5,8 +5,8 @@ export declare global {
       detail: {
         item: GetChecklistQuery
       }
-      registerChecklistForm: undefined
-      updateChecklistForm: {
+      registerChecklist: undefined
+      updateChecklist: {
         item: GetChecklistQuery
       }
     }
